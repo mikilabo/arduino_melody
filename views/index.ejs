@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<title>Arduino Melody</title>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+		<meta name="description" content="Here is the description of your page ">
+		<meta name="keywords" content=" keywords here ">
+		<meta name="author" content="Vubon Roy">
+		
+		<!-- Insert favicon icon location below link -->
+		<!-- <link href='' rel='shortcut icon' type='image/vnd.microsoft.icon'> -->
+	
+		<!-- jquery -->	
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+		<!-- bootstrap -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		
+		<!-- custom css -->
+		<link href="css/main.css" media="screen" rel="stylesheet" type="text/css" />
+		
+		<!-- Drop Down CSS -->
+		<link href="css/easydropdown.metro.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="css/demo.css" media="screen" rel="stylesheet" type="text/css" />
+		
+		<!--For drop down  -->
+		<!--
+		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+		-->
+		<script src="js/jquery.easydropdown.js"></script>
+
+		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/function.js"></script>
+
+		
+		<!-- For Clerar text -->
+		<script type="text/javascript">
+			$(function() {
+				// init plugin (with callback)
+				//$('.clearable').clearSearch({ callback: function() { console.log("cleared"); } } );
+
+				// update value
+				//$('.clearable').val('sample value').change();
+				
+				// change width
+				//$('.clearable').width('200px').change();
+			});
+		</script>
+	</head>
+	<body>
+		<section>
+			<div class="container color-one">
+				<div class="row">
+					<div class="col-md-12">
+						<br> 
+						<!-- this form for Server & Arduino  -->
+						<form class="form-horizontal" action="" method="post"> 
+							<!--
+							<div class="form-group">
+								<label for="text" class="control-label col-xs-3">Server</label>
+								<div class="col-xs-9">
+									<input type="text" disabled="disabled" class="form-control" id="inputName" placeholder="IP address">
+								</div>
+							</div>
+							-->
+							<div class="form-group">
+								<label for="text" class="control-label col-xs-3">Arduino</label>
+								<div class="col-xs-9">
+									<input type="text" disabled="disabled" class="form-control" id="arduino_name" placeholder="Arduino Machine No.">
+								</div>
+							</div>
+						</form> <!-- end form -->
+					</div>
+				</div><!-- end row -->
+			</div><!-- end container -->
+			   
+			<div class="container color-two">
+				<div class="row">
+					<div class="col-md-12">
+						<br>
+						<form class="form-horizontal" action="" > <!-- this form for Melody-->
+							<div class="form-group">
+								<label for="text" class="control-label col-xs-3"> Melody</label>
+								<div class="col-xs-9">
+									<select name="melody" id="melody_id" class="form-control option dropdown" tabindex="8" 
+																		data-settings='{"wrapperClass":"metro"}'>
+
+										<% for (var i=0; i<melodies.length; i++) { %>
+											<option value="<%= melodies[i].id %>"><%= melodies[i].name %></option>
+				
+										<% } %>
+
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-offset-3 col-xs-12">
+									<button disabled="disabled" type="button" class="btn btn-primary" id="send">
+													<span class="glyphicon glyphicon-music"></span> Ring Arduino</button>
+								</div>
+							</div>
+						</form> <!-- end form -->
+					</div>
+				</div><!-- end row -->
+			</div><!-- end container -->
+			
+			<div class="container color-three">
+				<div class="row">
+					<div class="col-md-12">
+						<form class="form-horizontal" action="" method="post"> <!-- this form for IP address -->
+							<br>
+							<div class="form-group">
+								<label for="status" class="control-label col-xs-3">Arduino Status</label>
+								<div class="col-xs-9">
+									<input type="text" disabled="disabled" class="form-control" 
+																id="arduino_status" placeholder="N/A">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="status" class="control-label col-xs-3">Server Melody</label>
+								<div class="col-xs-9">
+									<input type="text" disabled="disabled" class="form-control" 
+																id="melody_status" placeholder="N/A">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="start" class="control-label col-xs-3">Start</label>
+								<div class="col-xs-9">
+									<input type="text" disabled="disabled" class="form-control" id="start" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="end" class="control-label col-xs-3">End</label>
+								<div class="col-xs-9">
+									<input type="text" disabled="disabled" class="form-control clearable" id="end" >
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-offset-3 col-xs-12">
+									<button type="button" class="btn btn-primary" id="clear">
+													 <span class="glyphicon glyphicon-repeat"></span> Reset Server Setting</button>
+								</div>
+							</div>
+						</form> <!-- end form -->
+					</div>
+				</div><!-- end row -->
+			</div><!-- end container -->
+		</section>
+
+<div id="arduino_check"></div>
+<div id="err_msg"></div>
+<div id="melody_msg"></div>
+<div id="stop_msg"></div>
+
+	</body>
+</html>

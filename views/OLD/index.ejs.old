@@ -1,0 +1,29 @@
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.easydropdown.js"></script>
+    <script src="/js/function.js"></script>
+</head>
+<h1>Melody</h1>
+
+<ul class="melody">
+<% for (var i=0; i<melodies.length; i++) { %>
+<li>
+    id=<%= melodies[i].id %>, name=<%= melodies[i].name %>
+</li>
+<% } %>
+</ul>
+
+
+<input type="text" id="msg"> 
+<input type="button" id="send" value="Send!!"> 
+<div id="arduino_check"></div>
+<div id="err_msg"></div>
+<div id="melody_msg"></div>
+<div id="stop_msg"></div>
+
+</html>

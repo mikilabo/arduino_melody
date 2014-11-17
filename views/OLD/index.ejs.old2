@@ -1,0 +1,76 @@
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.easydropdown.js"></script>
+    <script src="/js/function.js"></script>
+    <script>
+        $(function() {
+            var socket = io.connect();
+            // emit: イベントを発信している
+            // on: イベントを待ち受けている
+            $('#myForm').submit(function() {
+                socket.emit('emit_from_client', $('#msg').val());
+            });
+
+
+			$("#send").click(function(){
+				var myid = $('#msg').val();
+				var length = $('ul.melody li').size();
+				console.log("length:" + length );
+				$('#msg').val('');
+
+				if(!myid.match(/^[0-9]+$/) ||
+					myid > length || myid <= 0
+				){
+		  			console.log("not numeric");
+					$('#err_msg').text('ID指定が不正');
+					$('#err_msg').delay(2000).queue(function(next) {
+						$('#err_msg').text('');
+						next();
+					});
+					return;
+		  		}
+				$('#melody_msg').text('melody_id = ' + myid);
+                socket.emit('emit_from_client', myid);
+			});
+
+			socket.on('stop_event', function (data) {
+				console.log(data);
+				$('#melody_msg').text('');
+				$('#stop_msg').text('Melody Stopped!');
+				setTimeout(function(){ 
+					$("#stop_msg").text(''); 
+				}, 5000 );
+        	});
+
+			socket.on('arduino_check', function (data) {
+				console.log("XX2");
+				console.log(data);
+				$('#arduino_check').text(data);
+        	});
+        });
+    </script>
+</head>
+<h1>Melody</h1>
+
+<ul class="melody">
+<% for (var i=0; i<melodies.length; i++) { %>
+<li>
+    id=<%= melodies[i].id %>, name=<%= melodies[i].name %>
+</li>
+<% } %>
+</ul>
+
+
+<input type="text" id="msg"> 
+<input type="button" id="send" value="Send!!"> 
+<div id="arduino_check"></div>
+<div id="err_msg"></div>
+<div id="melody_msg"></div>
+<div id="stop_msg"></div>
+
+</html>
